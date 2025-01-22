@@ -1,0 +1,45 @@
+{
+  "name": "awalhadi/event-management-system",
+  "type": "project",
+  "description": "A simple event management system.",
+  "keywords": [
+      "event management",
+      "event management system",
+      "event management software",
+      "event management app"
+  ],
+  "license": "MIT",
+  "require": {
+      "php": "^8.2.0",
+      "jenssegers/blade": "^1.4",
+      "vlucas/phpdotenv": "^5.3",
+      "firebase/php-jwt": "^6.0",
+      "phpmailer/phpmailer": "^6.5"
+  },
+  "require-dev": {
+      
+  },
+  "config": {
+      
+  },
+  "extra": {
+  },
+  "autoload": {
+      "psr-4": {
+          "App\\": "app/"
+      },
+      "files": [
+          "app/Helpers/helpers.php"
+      ]
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Tests\\": "tests/"
+      }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "scripts": {
+      
+  }
+}
