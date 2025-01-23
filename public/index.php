@@ -9,10 +9,13 @@ require_once __DIR__.'/../bootstrap.php';
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use App\Core\Router;
+use App\Core\CsrfTokenMiddleware;
 
 // session start
 session_start();
 
+// csrf token validation
+CsrfTokenMiddleware::validateCsrfToken();
 $log = new Logger('app');
 $log->pushHandler(new StreamHandler(__DIR__ . '/storage/logs/app.log', Logger::DEBUG));
 
