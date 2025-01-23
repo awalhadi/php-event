@@ -14,10 +14,8 @@
       "jenssegers/blade": "^1.4",
       "vlucas/phpdotenv": "^5.3",
       "firebase/php-jwt": "^6.0",
-      "phpmailer/phpmailer": "^6.5"
-  },
-  "require-dev": {
-      
+      "phpmailer/phpmailer": "^6.5",
+    "monolog/monolog": "^3.8"
   },
   "config": {
       

@@ -1,4 +1,5 @@
 <?php
+use App\Core\View;
 
 function redirect($path)
 {
@@ -17,4 +18,23 @@ function csrf_token()
 function validate_csrf_token($token)
 {
     return isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $token;
+}
+
+// debug helper
+function dd(...$value)
+{
+    foreach ($value as $val) {
+        echo '<pre>';
+        var_dump($val);
+        echo '</pre>';
+    }
+    die;
+}
+
+// show view
+if (!function_exists('view')) {
+  function view($view, $data = [])
+  {
+      echo View::render($view, $data);
+  }
 }

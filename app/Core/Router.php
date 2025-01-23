@@ -1,6 +1,7 @@
 <?php
 namespace App\Core;
 
+
 class Router {
   private $routes = [];
 
@@ -14,10 +15,14 @@ class Router {
 
   public function dispatch($uri, $method) {
     $uri = parse_url($uri, PHP_URL_PATH);
+    
     if (isset($this->routes[$method][$uri])) {
-      [$controller, $action, $params] = $this->routes[$method][$uri];
+      
+      [$controller, $action] = $this->routes[$method][$uri];
       $controllerInstance = new $controller;
-      call_user_func($controllerInstance, $action, $params);
+      $request = [];
+      // call_user_func($controllerInstance, $action);
+      call_user_func([$controllerInstance, $action], $request);
     }else{
       http_response_code(404);
       echo "404 Not Found";
