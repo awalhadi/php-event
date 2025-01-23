@@ -1,25 +1,32 @@
 <?php
+
 namespace App\Core;
+
 use Jenssegers\Blade\Blade;
 
 class View
 {
-  private $blade;
-  private $view;
+  private static $blade;
+  private static $view;
 
   public static function init()
   {
     if (!self::$blade) {
-        $views = __DIR__ . '/../../resources/views';
-        $cache = __DIR__ . '/../../storage/cache';
-  
-        self::$blade = new Blade($views, $cache);
+      $views = realpath(__DIR__ . '/../../resources/views');
+      $cache = realpath(__DIR__ . '/../../storage/cache');
+
+      if (!$views || !$cache) {
+        throw new \Exception('Invalid views or cache directory.');
+      }
+
+      self::$blade = new Blade($views, $cache);
     }
   }
 
   public static function render($view, $data = [])
   {
     self::init();
-    return self::$blade->render($view, $data);
+
+    echo self::$blade->render($view, $data);
   }
 }
