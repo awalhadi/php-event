@@ -13,7 +13,7 @@ class View
   {
     if (!self::$blade) {
       $views = realpath(__DIR__ . '/../../resources/views');
-      $cache = realpath(__DIR__ . '/../../storage/cache');
+      $cache = realpath(__DIR__ . '/../../storage/views');
 
       if (!$views || !$cache) {
         throw new \Exception('Invalid views or cache directory.');
