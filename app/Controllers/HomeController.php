@@ -2,10 +2,10 @@
 namespace App\Controllers;
 
 use App\Core\Request;
-use App\Controllers\Controller;
+// use App\Controllers\Controller;
 
 
-class HomeController extends Controller
+class HomeController
 {
   public function index(Request $request)
   {

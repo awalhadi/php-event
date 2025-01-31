@@ -105,23 +105,38 @@ if (!function_exists('route')) {
 
 // redirect route
 if (!function_exists('redirect')) {
-  function redirect($name, $params = [])
-  {
-    function redirect($url, $statusCode = 302) {
-      global $router;
-      
-      // Check if $url is a route name
-      if (is_string($url)) {
-        try {
-          $url = $router->route($url);
-        } catch (\Exception $e) {
-          // If route not found, use original URL
-        }
+  function redirect($url, $statusCode = 302) {
+    global $router;
+    
+    // Check if $url is a route name
+    if (is_string($url)) {
+      try {
+        $url = $router->route($url);
+      } catch (\Exception $e) {
+        // If route not found, use original URL
       }
-      
-      // Set redirect headers
-      header("Location: {$url}", true, $statusCode);
-      exit();
     }
+    
+    // Set redirect headers
+    header("Location: {$url}", true, $statusCode);
+    exit();
+  }
+}
+
+// make hash
+if (!function_exists('hash')) {
+  function hash($string) {
+    // generate custom password hashing encryption
+    $string = 'Natore' . $string . "Hadi";
+
+    return password_hash($string, PASSWORD_DEFAULT);
+  }
+}
+
+// verify hash
+if (!function_exists('verify')) {
+  function verify($string, $hash) {
+    $pass_string = 'Natore' . $string . "Hadi";
+    return password_verify($pass_string, $hash);
   }
 }

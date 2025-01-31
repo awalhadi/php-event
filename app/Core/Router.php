@@ -5,6 +5,7 @@ class Router {
   private $routes = [];
   private $named_routes = [];
   private $current_route = null;
+  private $middleware = [];
 
   // get method
   public function get($uri, $controller) {
@@ -58,6 +59,20 @@ class Router {
     }
     return $route;
   }
+
+  // middleware method
+  public function middleware($middlewares) {
+    // Allow single middleware or array of middlewares
+    $middlewareList = is_array($middlewares) ? $middlewares : func_get_args();
+
+    if($this->current_route) {
+      $method = $this->current_route['method'];
+      $uri = $this->current_route['uri'];
+      $this->current_route['middleware'] = $middlewareList;
+      $this->middleware[$method][$uri] = $middlewareList;
+    }
+    return $this;
+  }
   
   /**
    * Dispatches the controller and action based on the given URI and request method.
@@ -71,6 +86,20 @@ class Router {
     $uri = $this->normalizeUri(parse_url($uri, PHP_URL_PATH));
     $route = $this->matchRoute($uri, $method);
     if($route){
+
+      // check middleware
+      if(isset($this->middleware[$method][$uri])){
+        foreach($this->middleware[$method][$uri] as $middleware){
+          if(method_exists($middleware, 'handle')){
+            $result = $middleware::handle();
+            if($result === false){
+              return false;
+              die;
+            }
+          }
+        }
+      }
+
       [$controller, $action] = $this->routes[$method][$uri];
       $params = $route['params'];
       $controller_instance = new $controller;
